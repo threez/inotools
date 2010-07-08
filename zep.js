@@ -18,6 +18,18 @@ function extractDays() {
   var days = [], currentDay = null;
   
   $("#ProjektzeitTableDiv").find(".content table tr").each(function(i, e) {
+    // new day
+    var td = $(e).find("td div.wochentag sup");
+    if ($(td).text() != "") {
+      var day = {
+        date: $(td).text(),
+        items: [],
+        hours: 0
+      };
+      currentDay = day;
+      days.push(day);
+    }
+    
     var work = $($(e).find("td")[7]).text().match(/Reisen/)
   
     if (!work) {
@@ -28,18 +40,6 @@ function extractDays() {
       if (fac.length >= 1 && $(td).text() != "") {
         currentDay.items.push($(td).text());
         currentDay.hours += h;
-      }
-    } else {
-      // new day
-      var td = $(e).find("td div.wochentag sup");
-      if ($(td).text() != "") {
-        var day = {
-          date: $(td).text(),
-          items: [],
-          hours: 0
-        };
-        currentDay = day;
-        days.push(day);
       }
     }
   });
