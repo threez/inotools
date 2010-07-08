@@ -1,6 +1,3 @@
-var days = [],
-    currentDay = null;
-    
 Array.prototype.unique = function () {
 	var r = new Array();
 	o:for(var i = 0, n = this.length; i < n; i++)
@@ -16,29 +13,39 @@ Array.prototype.unique = function () {
 	}
 	return r;
 }
-    
-$("#ProjektzeitTableDiv").find(".content table tr").each(function(i, e) {
-  var work = $($(e).find("td")[7]).text().match(/Reisen/)
+
+function extractDays() {
+  var days = [], currentDay = null;
   
-  if (!work) {
-    // new entry
-    var td = $(e).find("td.textkurz span");
-    if ($(td).text() != "") {
-      currentDay.items.push($(td).text());
+  $("#ProjektzeitTableDiv").find(".content table tr").each(function(i, e) {
+    var work = $($(e).find("td")[7]).text().match(/Reisen/)
+  
+    if (!work) {
+      // new entry
+      var td = $(e).find("td.textkurz span");
+      var fac = $(e).find("td span img[alt=\"fakturierbar\"]");
+      var h = parseFloat($($(e).find("td")[3]).text().replace(/,/, "."));
+      if (fac.length >= 1 && $(td).text() != "") {
+        currentDay.items.push($(td).text());
+        currentDay.hours += h;
+      }
+    } else {
+      // new day
+      var td = $(e).find("td div.wochentag sup");
+      if ($(td).text() != "") {
+        var day = {
+          date: $(td).text(),
+          items: [],
+          hours: 0
+        };
+        currentDay = day;
+        days.push(day);
+      }
     }
-  } else {
-    // new day
-    var td = $(e).find("td div.wochentag sup");
-    if ($(td).text() != "") {
-      var day = {
-        date: $(td).text(),
-        items: []
-      };
-      currentDay = day;
-      days.push(day);
-    }
-  }
-})
+  });
+  
+  return days;
+}
 
 function generateHtmlTable(daysArray) {
   for (var i = 0; i < daysArray.length; ++i) {
@@ -54,6 +61,7 @@ function generateHtmlTable(daysArray) {
     for (var j = 0; j < daysArray[i].items.length; ++j) {
      html += daysArray[i].items[j] + "<br>";
     }
+    html += "</td><td>" + daysArray[i].hours
     html += "</td></tr>";
   }
 
@@ -61,4 +69,4 @@ function generateHtmlTable(daysArray) {
   "</div>";
 }
 
-document.write(generateHtmlTable(days));
+window.open("about:blank").document.write(generateHtmlTable(extractDays()));
