@@ -53,8 +53,9 @@ function generateHtmlTable(daysArray) {
   }
   daysArray = daysArray.reverse();
 
-  html = "<div style='position:absolute;top: 0px; left: 0px; margin: 20px auto; width: 50%; padding: 10px; background-color: 10px'>" + 
-    "<table style='border: 1px solid gray'>";
+  html = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">\n<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' +
+    '<title>ZepExtract</title></head><body><div style="position:absolute;top: 0px; left: 0px; margin: 20px auto; width: 50%; padding: 10px; background-color: 10px">' + 
+    '<table style="border: 1px solid gray">';
 
   for (var i = 0; i < daysArray.length; ++i) {
     html += "<tr><td>" + daysArray[i].date + "</td><td>";
@@ -66,7 +67,7 @@ function generateHtmlTable(daysArray) {
   }
 
   return html + "</table>" + 
-  "</div>";
+  "</div></body></html>";
 }
 
 window.open("about:blank").document.write(generateHtmlTable(extractDays()));
