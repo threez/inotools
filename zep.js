@@ -70,4 +70,12 @@ function generateHtmlTable(daysArray) {
   "</div></body></html>";
 }
 
-window.open("about:blank").document.write(generateHtmlTable(extractDays()));
+function openPage() {
+  window.open("about:blank").document.write(generateHtmlTable(extractDays()));
+  return false;
+}
+
+if ($("#container .submenu ul li.current a").text() == "Projektzeiten") {
+  console.log($.fn.jquery);
+  $("#breadcrumbs").append("<a href='javascript: openPage();'>Export for Freelancers</a>");
+}
