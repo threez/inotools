@@ -76,6 +76,5 @@ function openPage() {
 }
 
 if ($("#container .submenu ul li.current a").text() == "Projektzeiten") {
-  console.log($.fn.jquery);
-  $("#breadcrumbs").append("<a href='javascript: openPage();'>Export for Freelancers</a>");
+  $("#user_menu").append(" | <a href='javascript: openPage();'>Freelancing</a>");
 }
