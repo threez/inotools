@@ -62,7 +62,7 @@ function generateHtmlTable(daysArray) {
     for (var j = 0; j < daysArray[i].items.length; ++j) {
      html += daysArray[i].items[j] + "<br>";
     }
-    html += "</td><td>" + daysArray[i].hours
+    html += "</td><td>" + ("" + daysArray[i].hours).replace(".", ",");
     html += "</td></tr>";
   }
 
