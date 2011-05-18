@@ -14,15 +14,21 @@ Array.prototype.unique = function () {
 	return r;
 }
 
+// searches for the date within the given <td> element
+// returns a date string, e.g. "2011.03.20"
+function extractDate(td) {
+  return $(td).attr("id").replace("day_", "").replace(/-/g, ".");
+}
+
 function extractDays() {
   var days = [], currentDay = null;
   
   $("#ProjektzeitTableDiv").find(".content table tr").each(function(i, e) {
     // new day
-    var td = $(e).find("td div.wochentag sup");
+    var td = $(e).find("td div.wochentag").parents("td:first");
     if ($(td).text() != "") {
       var day = {
-        date: $(td).text(),
+        date: extractDate(td),
         items: [],
         hours: 0
       };
